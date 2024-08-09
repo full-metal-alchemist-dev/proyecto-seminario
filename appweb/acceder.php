@@ -70,7 +70,7 @@
                 Remember Me
               </label>
             </div> -->
-<button type="button" onclick="window.location.href='index.php'" class="btn btn-danger btn-block">Ir a Marcar</button>
+<!-- <button type="button" onclick="window.location.href='index.php'" class="btn btn-danger btn-block">Ir a Marcar</button> -->
  
 
           </div>
