@@ -1,16 +1,5 @@
 <?php
-$servername = "68.66.224.58";
-$username = "cat1921ajs_bd";
-$password = "&aSI~{{2MyL?";
-$dbname = "cat1921ajs_bd";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_config.php';
 
 // Get status from query parameter
 $status = isset($_GET['status']) ? (int)$_GET['status'] : 0;

@@ -32,7 +32,7 @@
         }
     </style>
 
-    <!-- Chart.js CDN -->
+    <!-- Chart.js CDN -->   
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -40,12 +40,16 @@
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 
     <script>
+        //var server = '';
+        //var server = 'https://catuses.com';
+        var server = 'http://192.168.1.150/';
+
         let potentiometerChart;
         const MAX_DATA_POINTS = 25; // Maximum number of data points to display
 
         // Fetch LED status and update UI
         function fetchStatus() {
-            fetch('https://catuses.com/proyecto/show_status.php')
+            fetch(server + '/proyecto/show_status.php')
                 .then(response => response.text())
                 .then(data => {
                     const status = parseInt(data, 10);
@@ -71,7 +75,7 @@
 
         // Fetch table data for LED status history
         function fetchTableData() {
-            fetch('https://catuses.com/proyecto/fetch_table_data.php')
+            fetch(server + '/proyecto/fetch_table_data.php')
                 .then(response => response.json())
                 .then(data => {
                     const table = $('#statusTable').DataTable();
@@ -86,7 +90,7 @@
 
         // Fetch potentiometer data and update both table and chart
         function fetchPotentiometerData() {
-            fetch('https://catuses.com/proyecto/fetch_potentiometer_data.php')
+            fetch(server + '/proyecto/fetch_potentiometer_data.php')
                 .then(response => response.json())
                 .then(data => {
                     const potTable = $('#potentiometerTable').DataTable();
@@ -174,7 +178,7 @@
             // Button toggle listener
             $('#toggleButton').click(function() {
                 const status = $(this).hasClass('btn-on') ? 0 : 1;
-                fetch(`https://catuses.com/proyecto/save.php?status=${status}`)
+                fetch(server + `/proyecto/save.php?status=${status}`)
                     .then(response => response.text())
                     .then(data => {
                         console.log('Response:', data);

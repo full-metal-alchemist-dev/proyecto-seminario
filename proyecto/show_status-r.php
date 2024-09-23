@@ -1,16 +1,5 @@
 <?php
-$servername = "68.66.224.58";
-$username = "cat1921ajs_bd";
-$password = "&aSI~{{2MyL?";
-$dbname = "cat1921ajs_bd";
-
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_config.php';
 
 
 $sql = "SELECT status FROM system_config WHERE id = 1"; 

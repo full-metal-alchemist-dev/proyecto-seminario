@@ -1,16 +1,5 @@
 <?php
-$servername = "68.66.224.58";
-$username = "cat1921ajs_bd";
-$password = "&aSI~{{2MyL?";
-$dbname = "cat1921ajs_bd";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+require 'db_config.php';
 
 // SQL query to fetch potentiometer data
 $sql = "SELECT id, pot_value, recorded_at FROM potentiometer_data ORDER BY recorded_at ASC ";  // Fetch all data ordered by timestamp

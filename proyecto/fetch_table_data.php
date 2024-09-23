@@ -1,12 +1,5 @@
 <?php
-$servername = "68.66.224.58";
-$username = "cat1921ajs_bd";
-$password = "&aSI~{{2MyL?";
-$dbname = "cat1921ajs_bd";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
+require 'db_config.php';
 // Check connection
 if ($conn->connect_error) {
     header('Content-Type: application/json');
