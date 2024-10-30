@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Status and Potentiometer Monitor</title>
-
+    <title>Sistema</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
@@ -30,9 +29,38 @@
             background-color: red;
             color: white;
         }
+
+
+        .chart-container {
+            height: 300px;
+            /* Adjust the height of the chart */
+        }
+
+        .card-title {
+            font-weight: bold;
+        }
+
+        .table-responsive {
+            max-height: 400px;
+            /* Limit height of the table container */
+            overflow-y: auto;
+            /* Enable scrolling if needed */
+        }
+
+        .table tbody tr:hover {
+            background-color: #f1f1f1;
+            /* Highlight table rows on hover */
+        }
+
+        @media (max-width: 576px) {
+            .chart-container {
+                height: 250px;
+                /* Adjust chart height for small screens */
+            }
+        }
     </style>
 
-    <!-- Chart.js CDN -->   
+    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -57,36 +85,55 @@
                     const toggleButton = document.getElementById('toggleButton');
 
                     if (status === 1) {
-                        ledStatus.textContent = "El LED está encendido";
+                        ledStatus.textContent = "Sistema Fotovoltaico";
                         ledStatus.style.color = "green";
                         toggleButton.classList.remove('btn-off');
                         toggleButton.classList.add('btn-on');
-                        toggleButton.textContent = "Apagar LED";
+                        toggleButton.textContent = "PASAR A Corriente Alterna";
                     } else {
-                        ledStatus.textContent = "El LED está apagado";
+                        ledStatus.textContent = "Alimentacion CA";
                         ledStatus.style.color = "red";
                         toggleButton.classList.remove('btn-on');
                         toggleButton.classList.add('btn-off');
-                        toggleButton.textContent = "Encender LED";
+                        toggleButton.textContent = "ENCENDER INVERSOR";
                     }
                 })
                 .catch(error => console.error('Error fetching status:', error));
         }
 
         // Fetch table data for LED status history
+        // Fetch table data for LED status history
         function fetchTableData() {
             fetch(server + '/proyecto/fetch_table_data.php')
-                .then(response => response.json())
-                .then(data => {
-                    const table = $('#statusTable').DataTable();
-                    table.clear();
-                    data.forEach(row => {
-                        table.row.add([row.id, row.status == 1 ? 'ENCENDIDO' : 'APAGADO']);
-                    });
-                    table.draw();
+                .then(response => {
+                    // Check if the response is OK (status code in the range 200-299)
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json(); // Parse JSON from the response
                 })
-                .catch(error => console.error('Error fetching table data:', error));
+                .then(data => {
+                    // Initialize DataTable with desired options
+                    const table = $('#statusTable').DataTable({
+                        destroy: true, // Allows reinitialization of the table
+                        searching: false, // Disables search box
+                        paging: false, // Disables pagination
+                        info: false, // Disables info display
+                        lengthChange: false, // Disables page length options
+                    });
+
+                    table.clear(); // Clear existing data in the table
+
+                    // Add a new row for each item in the data
+                    data.forEach(row => {
+                        table.row.add([row.id, row.status == 1 ? 'SISTEMA INVERSOR' : 'CORRIENTE ALTERNA']);
+                    });
+
+                    table.draw(); // Redraw the table to reflect the new data
+                })
+                .catch(error => console.error('Error fetching table data:', error)); // Handle errors
         }
+
 
         // Fetch potentiometer data and update both table and chart
         function fetchPotentiometerData() {
@@ -167,7 +214,7 @@
                         y: {
                             title: {
                                 display: true,
-                                text: 'Voltage'
+                                text: 'Voltaje'
                             },
                             beginAtZero: true
                         }
@@ -192,51 +239,86 @@
 
 <body>
     <div class="container">
-        <h1 class="mb-4">Monitoreo en Tiempo Real</h1>
-        <div class="row">
-            <!-- LED Status Card -->
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Estado del LED</h5>
-                        <p id="ledStatus" class="status">Cargando...</p>
-                        <button id="toggleButton" class="btn btn-status">Cambiar estado LED</button>
+        <h1 class="mb-4">Sistema Conmutador DC/AC </h1>
+        <div class="container mt-4"> <!-- Added margin top for spacing -->
+            <div class="row">
+                <!-- LED Status Card -->
+                <div class="col-md-6 mb-4"> <!-- Margin bottom for spacing -->
+                    <div class="card shadow-sm"> <!-- Added shadow for depth -->
+                        <div class="card-body text-center"> <!-- Center align text -->
+                            <h5 class="card-title">Alimentación del Conmutador</h5>
+                            <p id="ledStatus" class="status display-4">Cargando...</p> <!-- Increased font size -->
+                            <button id="toggleButton" class="btn btn-primary btn-lg">Cambiar estado del Sistema</button> <!-- Larger button -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Table -->
+                <div class="col-md-6 mb-4"> <!-- Margin bottom for spacing -->
+                    <div class="card shadow-sm"> <!-- Added shadow for depth -->
+                        <div class="card-body">
+                            <h5 class="card-title">Estado del Sistema</h5> <!-- Added title for context -->
+                            <table id="statusTable" class="table table-striped table-bordered">
+                                <thead class="thead-dark"> <!-- Dark header for contrast -->
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Origen</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Status Table -->
-            <div class="col-md-6">
-                <table id="statusTable" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Id</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
         </div>
+
 
         <hr>
 
-        <!-- Potentiometer Table -->
-        <h2>Lectura de Voltajes en tiempo real (c/1s)</h2>
-        <table id="potentiometerTable" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Voltaje</th>
-                    <th>Fecha y Hora</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
 
-        <!-- Potentiometer Chart -->
-        <h2>Gráfico de Voltaje</h2>
-        <canvas id="potentiometerChart" width="400" height="200"></canvas>
+        <div class="container mt-4">
+            <h2 class="text-center mb-4">Monitoreo de Voltaje</h2>
+            <div class="row align-items-stretch">
+                <!-- Potentiometer Chart -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Gráfico de Voltaje</h5>
+                            <div class="chart-container">
+                                <canvas id="potentiometerChart" width="600" height="400"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Potentiometer Table -->
+                <div class="col-md-6 mb-4">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Lectura de Voltajes en Tiempo Real (c/1s)</h5>
+                            <div class="table-responsive">
+                                <table id="potentiometerTable" class="table table-striped table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Id</th>
+                                            <th>Voltaje</th>
+                                            <th>Fecha y Hora</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </div>
+
+
+
+
+
     </div>
 </body>
 

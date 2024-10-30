@@ -9,6 +9,7 @@ if ($conn->connect_error) {
 
 // Fetch table data from the database
 $sql = "SELECT id, status FROM system_config"; // Adjust table name as needed
+//$sql = "SELECT status FROM system_config"; // Adjust table name as needed
 $result = $conn->query($sql);
 
 $data = [];
