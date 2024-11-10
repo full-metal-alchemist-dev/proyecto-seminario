@@ -70,7 +70,7 @@
     <script>
         //var server = '';
         //var server = 'https://catuses.com';
-        var server = 'http://192.168.1.150/';
+        var server = 'http://192.168.1.12/';
 
         let potentiometerChart;
         const MAX_DATA_POINTS = 25; // Maximum number of data points to display
