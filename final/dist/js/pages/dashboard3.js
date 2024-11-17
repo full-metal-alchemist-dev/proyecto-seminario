@@ -16,17 +16,17 @@ $(function () {
   var salesChart = new Chart($salesChart, {
     type: 'bar',
     data: {
-      labels: ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+      labels: ['LUN', 'MART', 'MIER', 'JUE', 'VIERN', 'SAB', 'DOM'],
       datasets: [
         {
           backgroundColor: '#007bff',
           borderColor: '#007bff',
-          data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
+          data: [1900, 2000, 2400, 2500, 2700, 2500, 3000]
         },
         {
           backgroundColor: '#ced4da',
           borderColor: '#ced4da',
-          data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
+          data: [1600, 1700, 2100, 2000, 2500, 2200, 2800]
         }
       ]
     },
@@ -45,7 +45,7 @@ $(function () {
       },
       scales: {
         yAxes: [{
-          // display: false,
+           display: false,
           gridLines: {
             display: true,
             lineWidth: '4px',
@@ -81,10 +81,10 @@ $(function () {
   // eslint-disable-next-line no-unused-vars
   var visitorsChart = new Chart($visitorsChart, {
     data: {
-      labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
+      labels: ['18', '20', '22', '24', '26', '28', '30'],
       datasets: [{
         type: 'line',
-        data: [100, 120, 170, 167, 180, 177, 160],
+        data: [1000, 1020, 1040, 1067, 1180, 1177, 1160],
         backgroundColor: 'transparent',
         borderColor: '#007bff',
         pointBorderColor: '#007bff',

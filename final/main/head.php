@@ -9,6 +9,11 @@
   <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
   
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+
+
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
   
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
 </head>
