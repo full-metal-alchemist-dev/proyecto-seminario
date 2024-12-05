@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FER</title>
+    <title>sistema control</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
     <style>
@@ -278,7 +278,7 @@
 
 
         <div class="container mt-4">
-            <h2 class="text-center mb-4">Monitoreo de Voltaje fer</h2>
+            <h2 class="text-center mb-4">Monitoreo de Voltaje</h2>
             <div class="row align-items-stretch">
                 <!-- Potentiometer Chart -->
                 <div class="col-md-6 mb-4">
